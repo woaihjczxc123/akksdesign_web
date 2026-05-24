@@ -624,11 +624,15 @@ h1 {
 
   .unicorn-canvas {
     min-height: 100svh;
-    transform: translate3d(-9vw, var(--bg-depth-y), 0) scale(calc(var(--bg-depth-scale) * 1.28));
+    transform: translate3d(0, var(--bg-depth-y), 0) scale(var(--bg-depth-scale));
     transform-origin: center top;
   }
 
-  .unicorn-canvas [data-us-text] {
+  body.is-past-hero .unicorn-canvas {
+    transform: translate3d(-9vw, var(--bg-depth-y), 0) scale(calc(var(--bg-depth-scale) * 1.28));
+  }
+
+  body.is-past-hero .unicorn-canvas [data-us-text] {
     display: none !important;
   }
 
@@ -760,10 +764,18 @@ h1 {
     padding: 10px;
   }
 
+  .video-modal.is-landscape {
+    align-items: center;
+  }
+
   .modal-panel {
     width: 100%;
     max-height: calc(100svh - 20px);
     border-radius: 8px;
+  }
+
+  .video-modal.is-landscape .modal-panel {
+    max-height: calc(100svh - 120px);
   }
 
   .modal-topbar {
@@ -788,6 +800,11 @@ h1 {
   .modal-video {
     max-height: calc(100svh - 108px);
     aspect-ratio: auto;
+  }
+
+  .video-modal.is-landscape .modal-video {
+    max-height: calc(100svh - 230px);
+    aspect-ratio: 16 / 9;
   }
 }
 

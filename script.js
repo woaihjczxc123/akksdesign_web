@@ -151,6 +151,7 @@ function openVideoModal(index) {
   const work = works[index];
   if (!work || !modal || !modalVideo || !modalTitle || !modalMeta) return;
 
+  modal.classList.remove("is-landscape", "is-portrait");
   modalTitle.textContent = work.titleEn;
   modalMeta.textContent = `${work.categoryEn} / ${work.categoryZh} · ${work.year}`;
   modalVideo.poster = work.thumbnail;
@@ -168,6 +169,7 @@ function closeVideoModal() {
   modalVideo.removeAttribute("src");
   modalVideo.load();
   modal.hidden = true;
+  modal.classList.remove("is-landscape", "is-portrait");
   document.body.classList.remove("modal-open");
 }
 
@@ -200,6 +202,16 @@ function setupVideoModal() {
   });
 }
 
+function setupVideoOrientation() {
+  if (!modal || !modalVideo) return;
+
+  modalVideo.addEventListener("loadedmetadata", () => {
+    const isLandscape = modalVideo.videoWidth >= modalVideo.videoHeight;
+    modal.classList.toggle("is-landscape", isLandscape);
+    modal.classList.toggle("is-portrait", !isLandscape);
+  });
+}
+
 function setupBackgroundDepth() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -212,6 +224,7 @@ function setupBackgroundDepth() {
 
     root.style.setProperty("--bg-depth-scale", scale.toFixed(4));
     root.style.setProperty("--bg-depth-y", `${y.toFixed(2)}px`);
+    document.body.classList.toggle("is-past-hero", window.scrollY > window.innerHeight * 0.65);
     ticking = false;
   }
 
@@ -229,4 +242,5 @@ function setupBackgroundDepth() {
 applyFeaturedWork();
 renderWorks();
 setupVideoModal();
+setupVideoOrientation();
 setupBackgroundDepth();
