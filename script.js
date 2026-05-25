@@ -155,7 +155,9 @@ function openVideoModal(index) {
   modalTitle.textContent = work.titleEn;
   modalMeta.textContent = `${work.categoryEn} / ${work.categoryZh} · ${work.year}`;
   modalVideo.poster = work.thumbnail;
+  modalVideo.preload = "auto";
   modalVideo.src = work.video;
+  modalVideo.load();
   modal.hidden = false;
   document.body.classList.add("modal-open");
   modalVideo.focus();
